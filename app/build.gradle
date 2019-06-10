@@ -1,18 +1,20 @@
-apply plugin: 'com.android.application'
+ext.mainApp = true //如果此module为主app module，则启用这一行
+//ext.alwaysLib = true //如果此module原来是一个library，被其它module所依赖，则启用这一行
+//以上2行根据具体情况启用其中一行
+apply from: rootProject.file('cc-settings-2.gradle')
 
 apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion androidSdk.compileSdkVersion
     defaultConfig {
-        applicationId "com.wyl.wanandroid2019"
-        minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        applicationId androidSdk.applicationId
+        minSdkVersion androidSdk.minSdkVersion
+        targetSdkVersion androidSdk.targetSdkVersion
+        versionCode androidSdk.versionCode
+        versionName androidSdk.versionName
+        testInstrumentationRunner androidSdk.testInstrumentationRunner
     }
     buildTypes {
         release {
@@ -20,14 +22,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding.enabled = true
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation supports
+    testImplementation tests
+    androidTestImplementation androidTests
+
+//    implementation project(':base_library')
+
+//    addComponent 'module_login' //会默认添加依赖：project(':demo_component_a')
+//    addComponent 'module_a' //会默认添加依赖：project(':demo_component_a')
+//    addComponent 'demo_component_kt', project(':demo_component_kt') //module方式
+//    addComponent 'demo_component_b', 'com.billy.demo:demo_b:1.1.0'  //maven方式
+
 }
