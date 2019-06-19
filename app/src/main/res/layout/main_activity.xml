@@ -8,7 +8,7 @@
 
         <variable
             name="presenter"
-            type="com.wyl.common_lib.inter.Presenter"/>
+            type="com.wyl.common_lib.base.Presenter"/>
 
     </data>
 

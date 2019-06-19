@@ -1,1 +1,1 @@
-include ':app', ':common_ui', ':common_lib'
+include ':app', ':common_ui', ':common_lib', ':home', ':okgo', ':login'

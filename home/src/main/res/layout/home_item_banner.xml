@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.wyl.home.HomeViewModel.BannerItemViewModel"/>
+
+        <variable
+            name="listener"
+            type="com.youth.banner.listener.OnBannerListener"/>
+
+    </data>
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        urls="@{item.urls}"
+        titles="@{item.titles}"
+        onItemClick="@{listener}"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
+</layout>

@@ -8,12 +8,17 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.wyl.common_lib.base.BindingActivity
+import com.wyl.common_lib.cc.ArouterHelper
 import com.wyl.common_lib.utils.transact
+import com.wyl.common_ui.COMPONENT_HOME
+import com.wyl.common_ui.HOME_FRAGMENT
 import com.wyl.wanandroid2019.databinding.MainActivityBinding
 
 class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val homeFragment by lazy { HomeFragment() }
+    private val homeFragment by lazy {
+        ArouterHelper.getFragment(COMPONENT_HOME, HOME_FRAGMENT)
+    }
 
     private val systemFragment by lazy {
         SystemFragment().apply {
@@ -55,7 +60,7 @@ class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNa
 
         navView.setNavigationItemSelectedListener(this)
 
-        transact { replace(R.id.rootView, HomeFragment()) }
+        transact { replace(R.id.rootView, homeFragment) }
 
         binding.tab.material()
             .addItem(R.drawable.icon_home_pager, "首页")

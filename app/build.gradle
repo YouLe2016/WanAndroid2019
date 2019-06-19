@@ -16,6 +16,8 @@ android {
         versionCode androidSdk.versionCode
         versionName androidSdk.versionName
         testInstrumentationRunner androidSdk.testInstrumentationRunner
+
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -35,7 +37,8 @@ dependencies {
     implementation dependency["pager-bottom-tab-strip"]
 
     implementation project(':common_ui')
-    implementation project(':common_lib')
+    addComponent 'home'
+    addComponent 'login'
 
 //    addComponent 'module_a' //会默认添加依赖：project(':demo_component_a')
 //    addComponent 'demo_component_kt', project(':demo_component_kt') //module方式
