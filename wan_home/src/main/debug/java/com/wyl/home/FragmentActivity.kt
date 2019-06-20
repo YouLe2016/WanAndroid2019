@@ -2,6 +2,7 @@ package com.wyl.home
 
 import android.support.v4.app.Fragment
 import com.wyl.libbase.DebugActivity
+import org.koin.android.ext.koin.androidFileProperties
 import org.koin.core.context.startKoin
 
 class FragmentActivity : DebugActivity() {
@@ -11,6 +12,7 @@ class FragmentActivity : DebugActivity() {
         startKoin {
             modules(homeModule)
         }
+
     }
 
 }

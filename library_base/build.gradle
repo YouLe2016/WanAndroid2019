@@ -30,7 +30,7 @@ dependencies {
     testImplementation tests
     androidTestImplementation androidTests
 
-    api koins
+    api koin["koin-android-viewmodel"]
     api glides
     api project(':library_okgo')
     api dependency["tkrefreshlayout"]
