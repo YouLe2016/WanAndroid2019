@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion androidSdk.compileSdkVersion
+    defaultConfig {
+        minSdkVersion androidSdk.minSdkVersion
+        targetSdkVersion androidSdk.targetSdkVersion
+        versionCode androidSdk.versionCode
+        versionName androidSdk.versionName
+        testInstrumentationRunner androidSdk.testInstrumentationRunner
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding.enabled = true
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation supports
+    testImplementation tests
+    androidTestImplementation androidTests
+
+    api koins
+    api glides
+    api project(':library_okgo')
+    api dependency["tkrefreshlayout"]
+    api dependency["banner"]
+    api 'com.ditclear:bindinglistadapter:1.0.1'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
+
+    api dependency["arouter-api"]
+//    api 'com.android.support:multidex:1.0.3'
+}

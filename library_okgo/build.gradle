@@ -1,0 +1,48 @@
+//apply plugin: 'com.android.library'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion androidSdk.compileSdkVersion
+    defaultConfig {
+        minSdkVersion androidSdk.minSdkVersion
+        targetSdkVersion androidSdk.targetSdkVersion
+        targetSdkVersion androidSdk.targetSdkVersion
+        versionCode androidSdk.versionCode
+        versionName androidSdk.versionName
+        testInstrumentationRunner androidSdk.testInstrumentationRunner
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+//    packagingOptions {
+//        exclude 'META-INF/DEPENDENCIES'
+//        exclude 'META-INF/NOTICE'
+//        exclude 'META-INF/LICENSE'
+//        exclude 'META-INF/LICENSE.txt'
+//        exclude 'META-INF/NOTICE.txt'
+//    }
+
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    implementation supports
+    testImplementation tests
+    androidTestImplementation androidTests
+
+    api dependency["okhttp3"]
+    api dependency["okrx"]
+    api dependency["rxandroid"]
+    api dependency["gson"]
+}

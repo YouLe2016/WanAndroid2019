@@ -9,11 +9,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/common_lib" />
-            <option value="$PROJECT_DIR$/common_ui" />
-            <option value="$PROJECT_DIR$/home" />
-            <option value="$PROJECT_DIR$/login" />
-            <option value="$PROJECT_DIR$/okgo" />
+            <option value="$PROJECT_DIR$/common_base" />
+            <option value="$PROJECT_DIR$/library_base" />
+            <option value="$PROJECT_DIR$/library_okgo" />
+            <option value="$PROJECT_DIR$/wan_home" />
+            <option value="$PROJECT_DIR$/wan_login" />
+            <option value="$PROJECT_DIR$/wan_main" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion androidSdk.compileSdkVersion
+    defaultConfig {
+        minSdkVersion androidSdk.minSdkVersion
+        targetSdkVersion androidSdk.targetSdkVersion
+        versionCode androidSdk.versionCode
+        versionName androidSdk.versionName
+        testInstrumentationRunner androidSdk.testInstrumentationRunner
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            java.srcDirs += 'src/main/debug/java'
+            res.srcDirs += "src/main/debug/res"
+            if (!isBuildModule.toBoolean()) {
+                resources {
+                    //正式版本时，排除debug文件夹下所有调试文件
+                    exclude 'src/main/debug/*'
+                }
+            }
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding.enabled = true
+    //统一资源前缀，规范资源引用
+    resourcePrefix "ui_"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation supports
+    testImplementation tests
+    androidTestImplementation androidTests
+
+    api project(':library_base')
+
+}
+

@@ -1,11 +1,6 @@
-ext.mainApp = true //如果此module为主app module，则启用这一行
-//ext.alwaysLib = true //如果此module原来是一个library，被其它module所依赖，则启用这一行
-//以上2行根据具体情况启用其中一行
-apply from: rootProject.file('cc-settings-2.gradle')
-
+apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion androidSdk.compileSdkVersion
@@ -17,15 +12,21 @@ android {
         versionName androidSdk.versionName
         testInstrumentationRunner androidSdk.testInstrumentationRunner
 
-        multiDexEnabled true
+//        multiDexEnabled true
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     dataBinding.enabled = true
+    //统一资源前缀，规范资源引用
+    resourcePrefix "base_"
 }
 
 dependencies {
@@ -34,14 +35,15 @@ dependencies {
     testImplementation tests
     androidTestImplementation androidTests
 
-    implementation dependency["pager-bottom-tab-strip"]
+    //宿主项目中判断组件是否需要独立运行
+    if (isBuildModule.toBoolean()) {
+        //组件独立运行时，宿主项目直接依赖基础库，避免编译错误
+        implementation project(':common_base')
+    } else {
+        implementation project(':wan_main')
+        implementation project(':wan_home')
+        implementation project(':wan_login')
+    }
 
-    implementation project(':common_ui')
-    addComponent 'home'
-    addComponent 'login'
-
-//    addComponent 'module_a' //会默认添加依赖：project(':demo_component_a')
-//    addComponent 'demo_component_kt', project(':demo_component_kt') //module方式
-//    addComponent 'demo_component_b', 'com.billy.demo:demo_b:1.1.0'  //maven方式
 
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.wyl.libbase.base.Presenter"/>
+
+        <variable
+            name="vm"
+            type="com.wyl.libbase.base.PageViewModel"/>
+    </data>
+
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+        android:id="@+id/refreshLayout"
+        refreshListener="@{vm.loadListener}"
+        enableLoadMore="@{vm.enableLoadMore}"
+        refresh="@{vm.refresh}"
+        loadMore="@{vm.loadMore}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            itemDecoration="@{presenter.getItemDecoration()}"
+            app:adapter="@{presenter.getAdapter()}"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical">
+
+        </android.support.v7.widget.RecyclerView>
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+</layout>
