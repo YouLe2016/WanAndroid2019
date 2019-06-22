@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.wyl.category.vm.ChildItemModel"/>
+
+        <variable
+            name="presenter"
+            type="io.ditclear.bindingadapter.ItemClickPresenter"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:onClick="@{v->presenter.onItemClick(v,item)}"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@{item.content}"
+            android:background="@drawable/category_item"
+            selected="@{item.checked}"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textSize="@dimen/ui_content_l"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"/>
+
+    </android.support.v7.widget.CardView>
+
+
+</layout>

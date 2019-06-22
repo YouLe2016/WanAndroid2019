@@ -7,6 +7,10 @@ import com.lzg.extend.JsonConvert
 import com.lzg.extend.toDisposables
 import com.lzy.okgo.OkGo
 import com.lzy.okrx2.adapter.ObservableBody
+import com.wyl.base.HOME_ARTICLE_LIST
+import com.wyl.base.HOME_BANNER
+import com.wyl.base.HOME_FRIEND
+import com.wyl.base.HOME_HOTKEY
 import com.wyl.home.bean.ArticleData
 import com.wyl.home.bean.BannerData
 import com.wyl.home.bean.FriendData
@@ -14,7 +18,7 @@ import com.wyl.home.bean.HotKeyData
 import com.wyl.libbase.base.PageViewModel
 
 class HomeViewModel : PageViewModel() {
-    val dataSource by lazy { ObservableArrayList<Any>() }
+    val dataSource = ObservableArrayList<Any>()
 
     private var bannerItemViewModel: BannerItemViewModel? = null
     private var hotKeyItemViewModel: HotKeyItemViewModel? = null
@@ -38,7 +42,7 @@ class HomeViewModel : PageViewModel() {
                 dataSource.add(hotKeyItemViewModel)
                 dataSource.add(friendItemViewModel)
                 it.datas?.let { data ->
-//                    data.flatMap { }
+                    //                    data.flatMap { }
                     dataSource.addAll(data)
                 }
                 enableLoadMore.set(!it.over)

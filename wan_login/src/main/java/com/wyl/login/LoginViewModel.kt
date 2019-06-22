@@ -6,8 +6,8 @@ import com.lzg.extend.JsonConvert
 import com.lzg.extend.toDisposables
 import com.lzy.okgo.OkGo
 import com.lzy.okrx2.adapter.ObservableBody
-import com.wyl.commbase.LOGIN_LOGIN
-import com.wyl.commbase.LOGIN_REGISTER
+import com.wyl.base.LOGIN_LOGIN
+import com.wyl.base.LOGIN_REGISTER
 import com.wyl.libbase.base.BaseViewModel
 import com.wyl.login.bean.LoginData
 

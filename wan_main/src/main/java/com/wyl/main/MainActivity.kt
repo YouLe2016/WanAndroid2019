@@ -7,7 +7,8 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.wyl.commbase.HomeFragment
+import com.wyl.base.CategoryFragment
+import com.wyl.base.HomeFragment
 import com.wyl.libbase.base.BindingActivity
 import com.wyl.libbase.utils.getFragment
 import com.wyl.libbase.utils.transact
@@ -15,13 +16,11 @@ import com.wyl.main.databinding.MainActivityBinding
 
 class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val homeFragment by lazy {
-        getFragment(HomeFragment)
-    }
+    private val homeFragment by lazy { getFragment(HomeFragment) }
 
     private val systemFragment by lazy {
-        SystemFragment().apply {
-            transact {
+        getFragment(CategoryFragment).apply {
+            this@MainActivity.transact {
                 add(R.id.rootView, this@apply)
             }
         }
@@ -29,7 +28,7 @@ class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNa
 
     private val navFragment by lazy {
         NavFragment().apply {
-            transact {
+            this@MainActivity.transact {
                 add(R.id.rootView, this@apply)
             }
         }
@@ -37,7 +36,7 @@ class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNa
 
     private val todoFragment by lazy {
         TodoFragment().apply {
-            transact {
+            this@MainActivity.transact {
                 add(R.id.rootView, this@apply)
             }
         }

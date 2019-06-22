@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.wyl.category.vm.LeftItemModel"/>
+
+        <variable
+            name="presenter"
+            type="io.ditclear.bindingadapter.ItemClickPresenter"/>
+    </data>
+
+    <TextView
+        android:text="@{item.content}"
+        android:background="@drawable/category_item"
+        selected="@{item.checked}"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="@dimen/ui_content_l"
+        android:onClick="@{v->presenter.onItemClick(v,item)}"
+        android:layout_width="match_parent"
+        android:layout_height="46dp">
+
+    </TextView>
+</layout>

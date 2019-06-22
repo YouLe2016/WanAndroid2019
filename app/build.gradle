@@ -43,6 +43,7 @@ dependencies {
         implementation project(':wan_main')
         implementation project(':wan_home')
         implementation project(':wan_login')
+        implementation project(':wan_category')
     }
 
 

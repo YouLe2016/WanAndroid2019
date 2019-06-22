@@ -2,7 +2,7 @@ package com.wyl.login
 
 import android.arch.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.wyl.commbase.LoginActivity
+import com.wyl.base.LoginActivity
 import com.wyl.libbase.base.BindingActivity
 import com.wyl.libbase.utils.toast
 import com.wyl.login.databinding.LoginActivityBinding

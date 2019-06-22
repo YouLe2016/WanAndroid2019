@@ -7,7 +7,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.wyl.commbase.HomeFragment
+import com.wyl.base.HomeFragment
 import com.wyl.home.databinding.HomeFragmentBinding
 import com.wyl.home.databinding.HomeItemBannerBinding
 import com.wyl.home.databinding.HomeItemHotkeyBinding
@@ -22,6 +22,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 const val TYPE_BANNER = 3
 const val TYPE_HOTKEY = 1
+const val TYPE_ARTICLE = 0
 const val TYPE_FRIEND = TYPE_HOTKEY
 
 @Route(path = HomeFragment)
@@ -54,12 +55,12 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
                 override fun getViewType(item: Any): Int = when (item) {
                     is HomeViewModel.BannerItemViewModel -> TYPE_BANNER
                     is HomeViewModel.HotKeyItemViewModel -> TYPE_HOTKEY
-                    else -> 0
+                    else -> TYPE_ARTICLE
                 }
             }).apply {
             addViewTypeToLayoutMap(TYPE_BANNER, R.layout.home_item_banner)
             addViewTypeToLayoutMap(TYPE_HOTKEY, R.layout.home_item_hotkey)
-            addViewTypeToLayoutMap(0, R.layout.home_item_article)
+            addViewTypeToLayoutMap(TYPE_ARTICLE, R.layout.home_item_article)
             itemDecorator = this@HomeFragment
             itemPresenter = this@HomeFragment
         }

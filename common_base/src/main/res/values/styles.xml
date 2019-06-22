@@ -11,6 +11,7 @@
     <style name="UI_AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:textSize">@dimen/ui_content_l</item>
     </style>
 
     <!--toolbar使用-->

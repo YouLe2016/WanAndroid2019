@@ -1,15 +1,16 @@
 package com.wyl.base
 
 import android.app.Application
-import com.wyl.commbase.init.host
+import com.wyl.base.init.host
 import com.wyl.libbase.init.IModuleInit
 
 
 val ModuleInit = arrayOf(
-    "$host.commbase.init.BaseModuleInit",
+    "$host.base.init.BaseModuleInit",
     "$host.main.MainModuleInit",
     "$host.home.HomeModuleInit",
-    "$host.login.LoginModuleInit"
+    "$host.login.LoginModuleInit",
+    "$host.category.DebugCategoryModuleInit"
 )
 
 fun initModuleAhead(app: Application) {

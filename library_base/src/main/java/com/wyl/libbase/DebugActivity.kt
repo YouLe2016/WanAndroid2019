@@ -13,4 +13,9 @@ abstract class DebugActivity : NormalActivity() {
     }
 
     abstract fun createFragment(): Fragment
+
+
+    override fun loadData() {
+
+    }
 }

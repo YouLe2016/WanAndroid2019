@@ -1,1 +1,1 @@
-include ':common_base', ':library_base', ':library_okgo', ':app', ':wan_home', ':wan_main', ':wan_login'
+include ':common_base', ':library_base', ':library_okgo', ':app', ':wan_home', ':wan_main', ':wan_login', ':wan_category'
