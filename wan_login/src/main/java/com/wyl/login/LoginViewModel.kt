@@ -6,6 +6,7 @@ import com.lzg.extend.JsonConvert
 import com.lzg.extend.toDisposables
 import com.lzy.okgo.OkGo
 import com.lzy.okrx2.adapter.ObservableBody
+import com.wyl.base.ACacheHelper
 import com.wyl.base.LOGIN_LOGIN
 import com.wyl.base.LOGIN_REGISTER
 import com.wyl.libbase.base.BaseViewModel
@@ -47,6 +48,7 @@ class LoginViewModel : BaseViewModel() {
             .doFinally { loading.set(false) }
             .subscribe({
                 success.value = it.msg
+                it.data.username?.let { username -> ACacheHelper.login(username) }
             }, {
                 onError(it)
             }).toDisposables(disposables)

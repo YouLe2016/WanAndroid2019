@@ -35,7 +35,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="?attr/colorPrimary"
-                    app:popupTheme="@style/UI_AppTheme.PopupOverlay"/>
+                    app:popupTheme="@style/UI_AppTheme.PopupOverlay">
+
+                </android.support.v7.widget.Toolbar>
+
 
             </android.support.design.widget.AppBarLayout>
 

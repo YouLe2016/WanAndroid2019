@@ -38,6 +38,8 @@ dependencies {
     api 'com.ditclear:bindinglistadapter:1.0.1'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
 
+    api 'com.just.agentweb:agentweb:4.0.2'
+
     api dependency["arouter-api"]
 //    api 'com.android.support:multidex:1.0.3'
 }

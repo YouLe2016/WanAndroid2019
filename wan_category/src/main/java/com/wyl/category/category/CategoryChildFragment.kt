@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.wyl.category.R
 import com.wyl.category.databinding.CategoryChildFragmentBinding
-import com.wyl.category.vm.CategoryChildViewModel
 import com.wyl.category.vm.GroupItemModel
 import com.wyl.category.vm.StringItemModel
 import com.wyl.libbase.base.BindingFragment

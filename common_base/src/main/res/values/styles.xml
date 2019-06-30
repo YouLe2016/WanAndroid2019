@@ -11,12 +11,6 @@
     <style name="UI_AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:textSize">@dimen/ui_content_l</item>
     </style>
-
-    <!--toolbar使用-->
-    <style name="UI_AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-    <style name="UI_AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>

@@ -1,7 +1,9 @@
-package com.wyl.category.vm
+package com.wyl.category.category
 
 import android.databinding.ObservableArrayList
 import com.wyl.category.bean.CategoryBean
+import com.wyl.category.vm.ChildItemModel
+import com.wyl.category.vm.GroupItemModel
 import com.wyl.libbase.base.BaseViewModel
 
 class CategoryChildViewModel : BaseViewModel() {

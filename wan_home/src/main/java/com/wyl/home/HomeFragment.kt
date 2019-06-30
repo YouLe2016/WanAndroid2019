@@ -7,7 +7,11 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.wyl.base.ACacheHelper
 import com.wyl.base.HomeFragment
+import com.wyl.base.LoginActivity
+import com.wyl.base.activity.openWebActivity
+import com.wyl.home.bean.ArticleData
 import com.wyl.home.databinding.HomeFragmentBinding
 import com.wyl.home.databinding.HomeItemBannerBinding
 import com.wyl.home.databinding.HomeItemHotkeyBinding
@@ -15,6 +19,7 @@ import com.wyl.libbase.base.BindingFragment
 import com.wyl.libbase.binding.recyclerview.RecyclerViewDivider
 import com.wyl.libbase.binding.recyclerview.RecyclerViewSpace
 import com.wyl.libbase.utils.KLog
+import com.wyl.libbase.utils.openActivity
 import com.wyl.libbase.utils.toast
 import com.youth.banner.listener.OnBannerListener
 import io.ditclear.bindingadapter.*
@@ -80,20 +85,22 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
     override fun onItemClick(v: View, item: Any) {
         when (v.id) {
             R.id.iv_like -> {
-                KLog.d(viewModel.dataSource.indexOf(item))
-                /*if (ACacheHelper.hasLogin()) {
+                if (ACacheHelper.hasLogin()) {
                     val data = item as ArticleData.DatasBean
-                    data.collect = !data.collect
+                    if (data.collect) viewModel.uncollect(data) else viewModel.collect(data)
                 } else {
                     openActivity(LoginActivity)
-                }*/
+                }
+            }
+            R.id.layoutArticle -> {
+                val bean = item as ArticleData.DatasBean
+                openWebActivity(bean.link, bean.title, bean.id, bean.author)
             }
             else -> {
                 KLog.d(viewModel.dataSource.indexOf(item))
             }
         }
     }
-
 
     private fun itemHotKeyInitView(binding: HomeItemHotkeyBinding) {
         binding.rvGrid.apply {

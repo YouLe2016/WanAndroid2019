@@ -6,7 +6,7 @@ package com.wyl.category.category
 //import android.view.View
 //import com.wyl.category.R
 //import com.wyl.category.databinding.CategoryChildFragmentBinding
-//import com.wyl.category.vm.CategoryChildViewModel
+//import com.wyl.category.category.CategoryChildViewModel
 //import com.wyl.category.vm.GroupItemModel
 //import com.wyl.libbase.base.BindingFragment
 //import com.wyl.libbase.utils.KLog

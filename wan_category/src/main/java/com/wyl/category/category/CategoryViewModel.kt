@@ -1,4 +1,4 @@
-package com.wyl.category.vm
+package com.wyl.category.category
 
 import android.databinding.ObservableArrayList
 import com.lzg.extend.BaseResponse
@@ -8,6 +8,7 @@ import com.lzy.okgo.OkGo
 import com.lzy.okrx2.adapter.ObservableBody
 import com.wyl.base.TREE_CATEGORY
 import com.wyl.category.bean.CategoryBean
+import com.wyl.category.vm.LeftItemModel
 import com.wyl.libbase.base.BaseViewModel
 
 class CategoryViewModel : BaseViewModel() {

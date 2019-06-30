@@ -437,7 +437,7 @@ public class ACache {
      * @version 1.0
      * @title 缓存管理器
      */
-    public static class ACacheManager {
+    private static class ACacheManager {
         private final AtomicLong cacheSize;
         private final AtomicInteger cacheCount;
         private final long sizeLimit;

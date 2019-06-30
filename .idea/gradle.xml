@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/common_base" />
             <option value="$PROJECT_DIR$/library_base" />
             <option value="$PROJECT_DIR$/library_okgo" />
+            <option value="$PROJECT_DIR$/wan_category" />
             <option value="$PROJECT_DIR$/wan_home" />
             <option value="$PROJECT_DIR$/wan_login" />
             <option value="$PROJECT_DIR$/wan_main" />

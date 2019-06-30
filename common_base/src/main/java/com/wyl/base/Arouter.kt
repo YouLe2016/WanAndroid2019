@@ -21,10 +21,14 @@ const val LoginActivity = "$Login/loginActivity"
 
 
 /* 分类组件 */
-
 const val Category = "/category"
 
 const val CategoryFragment = "$Category/categoryFragment"
+
+/* 基础组件 */
+const val Base = "/base"
+
+const val WebActivity = "$Base/webActivity"
 
 
 

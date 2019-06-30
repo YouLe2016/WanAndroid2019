@@ -1,18 +1,14 @@
 package com.wyl.category.category
 
 
-import android.content.Context
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.wyl.base.CategoryFragment
 import com.wyl.category.R
 import com.wyl.category.databinding.CategoryFragmentBinding
-import com.wyl.category.vm.CategoryChildViewModel
-import com.wyl.category.vm.CategoryViewModel
 import com.wyl.category.vm.LeftItemModel
 import com.wyl.libbase.base.BindingFragment
 import com.wyl.libbase.binding.recyclerview.RecyclerViewDivider
-import com.wyl.libbase.utils.KLog
 import com.wyl.libbase.utils.transact
 import io.ditclear.bindingadapter.ItemClickPresenter
 import io.ditclear.bindingadapter.SingleTypeAdapter

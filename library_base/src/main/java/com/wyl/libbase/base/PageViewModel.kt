@@ -34,17 +34,7 @@ abstract class PageViewModel : BaseViewModel() {
 
     }
 
-    /**
-     * Loading is finish
-     */
-    val finish = ObservableBoolean(false)
-
     val enableLoadMore = ObservableBoolean(true)
-
-    abstract fun refresh()
-
-    abstract fun loadMore()
-
 
     /**
      * 是否正在刷新
@@ -61,5 +51,7 @@ abstract class PageViewModel : BaseViewModel() {
      */
     val empty = ObservableBoolean(false)
 
+    abstract fun refresh()
 
+    abstract fun loadMore()
 }

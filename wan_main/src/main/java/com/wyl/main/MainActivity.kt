@@ -16,7 +16,9 @@ import com.wyl.main.databinding.MainActivityBinding
 
 class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val homeFragment by lazy { getFragment(HomeFragment) }
+    private val homeFragment by lazy {
+        getFragment(HomeFragment)
+    }
 
     private val systemFragment by lazy {
         getFragment(CategoryFragment).apply {
@@ -66,7 +68,7 @@ class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNa
             .addItem(R.drawable.icon_navigation, "导航")
             .addItem(R.drawable.icon_todo, "便签")
             .build()
-            .addSimpleTabItemSelectedListener { index, _ ->
+            .addSimpleTabItemSelectedListener { index, old ->
                 when (index) {
                     0 -> transact {
                         show(homeFragment)
@@ -91,8 +93,6 @@ class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNa
                         hide(systemFragment)
                         hide(navFragment)
                         show(todoFragment)
-                    }
-                    else -> {
                     }
                 }
             }

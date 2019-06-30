@@ -7,10 +7,7 @@ import com.lzg.extend.JsonConvert
 import com.lzg.extend.toDisposables
 import com.lzy.okgo.OkGo
 import com.lzy.okrx2.adapter.ObservableBody
-import com.wyl.base.HOME_ARTICLE_LIST
-import com.wyl.base.HOME_BANNER
-import com.wyl.base.HOME_FRIEND
-import com.wyl.base.HOME_HOTKEY
+import com.wyl.base.*
 import com.wyl.home.bean.ArticleData
 import com.wyl.home.bean.BannerData
 import com.wyl.home.bean.FriendData
@@ -36,8 +33,7 @@ class HomeViewModel : PageViewModel() {
             .doOnNext {
                 dataSource.clear()
                 page = it.curPage
-            }
-            .subscribe({
+            }.subscribe({
                 dataSource.add(bannerItemViewModel)
                 dataSource.add(hotKeyItemViewModel)
                 dataSource.add(friendItemViewModel)
@@ -48,8 +44,7 @@ class HomeViewModel : PageViewModel() {
                 enableLoadMore.set(!it.over)
             }, {
                 onError(it)
-            })
-            .toDisposables(disposables)
+            }).toDisposables(disposables)
     }
 
     override fun loadMore() {
@@ -57,16 +52,13 @@ class HomeViewModel : PageViewModel() {
             .doFinally { loadMore.set(false) }
             .doOnNext {
                 page = it.curPage
-            }
-            .subscribe {
+            }.subscribe {
                 it.datas?.let { data ->
                     dataSource.addAll(data)
                 }
                 enableLoadMore.set(!it.over)
-            }
-            .toDisposables(disposables)
+            }.toDisposables(disposables)
     }
-
 
     private fun loadBannerData() =
         OkGo.get<BaseResponse<List<BannerData>>>(HOME_BANNER)
@@ -94,6 +86,42 @@ class HomeViewModel : PageViewModel() {
             .converter(object : JsonConvert<BaseResponse<ArticleData>>() {})
             .adapt(ObservableBody<BaseResponse<ArticleData>>())
             .map { it.data }
+
+    /**
+     * 收藏文章
+     */
+    fun collect(data: ArticleData.DatasBean) {
+        OkGo.post<BaseResponse<*>>("$COLLECT_IN/${data.id}/json")
+            .converter(object : JsonConvert<BaseResponse<*>>() {})
+            .adapt(ObservableBody<BaseResponse<*>>())
+            .map { it.msg }
+            .doOnSubscribe { loading.set(true) }
+            .doFinally { loading.set(false) }
+            .subscribe({
+                data.collect = !data.collect
+                error.value = "收藏成功"
+            }, {
+                onError(it)
+            }).toDisposables(disposables)
+    }
+
+    /**
+     * 取消收藏
+     */
+    fun uncollect(data: ArticleData.DatasBean) {
+        OkGo.post<BaseResponse<*>>("$UNCOLLECT_HOME/${data.id}/json")
+            .converter(object : JsonConvert<BaseResponse<*>>() {})
+            .adapt(ObservableBody<BaseResponse<*>>())
+            .map { it.msg }
+            .doOnSubscribe { loading.set(true) }
+            .doFinally { loading.set(false) }
+            .subscribe({
+                data.collect = !data.collect
+                error.value = "取消收藏成功"
+            }, {
+                onError(it)
+            }).toDisposables(disposables)
+    }
 
 
     class BannerItemViewModel(data: List<BannerData>) : ViewModel() {

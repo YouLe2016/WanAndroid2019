@@ -8,6 +8,22 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 
+/**
+ * 自动获取属性值
+ */
+fun <T> AppCompatActivity.autoWired(key: String, default: T? = null): T? {
+    return intent?.extras?.let {
+        if (it.get(key) != null) {
+            try {
+                it.get(key) as T
+            } catch (e: ClassCastException) {
+                e.printStackTrace()
+                null
+            }
+        } else default
+    }
+}
+
 /* ************************************************ TitleBar ************************************************* */
 /**
  * 获取状态栏高度
@@ -23,21 +39,21 @@ fun AppCompatActivity.getActionBarHeight(): Int {
 
 /**
  * 获取状态栏高度
- * 在 onWindowFocusChanged 方法中可以获取到值
+ * 在onCreate方法中也可以获取
  */
-fun AppCompatActivity.getStatusBarHeight(): Int = Rect().let {
-    window.decorView.getWindowVisibleDisplayFrame(it)
-    it.top
+fun AppCompatActivity.getStatusBarHeight(): Int {
+    // 获得状态栏高度
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    return resources.getDimensionPixelSize(resourceId)
 }
 
 /**
  * 获取状态栏高度
- * 在onCreate方法中也可以获取
+ * 在 onWindowFocusChanged 方法中可以获取到值
  */
-fun AppCompatActivity.getStatusBarHeight2(): Int {
-    // 获得状态栏高度
-    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-    return resources.getDimensionPixelSize(resourceId)
+fun AppCompatActivity.getStatusBarHeight2(): Int = Rect().let {
+    window.decorView.getWindowVisibleDisplayFrame(it)
+    it.top
 }
 
 /**

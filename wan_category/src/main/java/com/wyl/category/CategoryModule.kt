@@ -1,7 +1,7 @@
 package com.wyl.category
 
-import com.wyl.category.vm.CategoryChildViewModel
-import com.wyl.category.vm.CategoryViewModel
+import com.wyl.category.category.CategoryChildViewModel
+import com.wyl.category.category.CategoryViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

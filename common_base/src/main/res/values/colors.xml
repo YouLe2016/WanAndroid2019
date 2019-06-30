@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ui_colorPrimary">#008577</color>
-    <color name="ui_colorPrimaryDark">#00574B</color>
-    <color name="ui_colorAccent">#D81B60</color>
-
     <color name="ui_grid_title_bg">#3668bf</color>
     <color name="ui_article_type_color">#3fb64f</color>
 </resources>
