@@ -4,6 +4,7 @@ package com.wyl.home
 import android.arch.lifecycle.Observer
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -18,7 +19,6 @@ import com.wyl.home.databinding.HomeItemHotkeyBinding
 import com.wyl.libbase.base.BindingFragment
 import com.wyl.libbase.binding.recyclerview.RecyclerViewDivider
 import com.wyl.libbase.binding.recyclerview.RecyclerViewSpace
-import com.wyl.libbase.utils.KLog
 import com.wyl.libbase.utils.openActivity
 import com.wyl.libbase.utils.toast
 import com.youth.banner.listener.OnBannerListener
@@ -36,10 +36,13 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
 
     val viewModel: HomeViewModel by viewModel()
 
+    val layoutManager by lazy { LinearLayoutManager(context) }
+
     override fun getLayoutId(): Int = R.layout.home_fragment
 
     override fun initView() {
         binding.vm = viewModel
+        binding.recyclerView.layoutManager = layoutManager
     }
 
     override fun loadData() {
@@ -95,9 +98,6 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
             R.id.layoutArticle -> {
                 val bean = item as ArticleData.DatasBean
                 openWebActivity(bean.link, bean.title, bean.id, bean.author)
-            }
-            else -> {
-                KLog.d(viewModel.dataSource.indexOf(item))
             }
         }
     }

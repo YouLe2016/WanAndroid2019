@@ -21,7 +21,18 @@ const val HOME_FRIEND = "${BASE_URL}friend/json"
 const val HOME_ARTICLE_LIST = "${BASE_URL}article/list/"
 
 /* **************** 2.体系 **********************/
+/**
+ * 体系数据
+ */
 const val TREE_CATEGORY = "${BASE_URL}tree/json"
+
+
+/* **************** 3. 导航 **********************/
+/**
+ * 导航数据
+ */
+const val NAV_CATEGORY = "${BASE_URL}navi/json"
+
 
 /* **************** 6.收藏 **********************/
 /**

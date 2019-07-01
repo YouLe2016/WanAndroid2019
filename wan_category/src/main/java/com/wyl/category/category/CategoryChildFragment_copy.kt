@@ -6,12 +6,12 @@ package com.wyl.category.category
 //import android.view.View
 //import com.wyl.category.R
 //import com.wyl.category.databinding.CategoryChildFragmentBinding
-//import com.wyl.category.category.CategoryChildViewModel
 //import com.wyl.category.vm.GroupItemModel
 //import com.wyl.libbase.base.BindingFragment
 //import com.wyl.libbase.utils.KLog
 //import io.ditclear.bindingadapter.ItemClickPresenter
 //import io.ditclear.bindingadapter.MultiTypeAdapter
+//import org.koin.android.viewmodel.ext.android.sharedViewModel
 //import org.koin.android.viewmodel.ext.android.viewModel
 //
 //const val TYPE_GROUP = 3
@@ -19,9 +19,10 @@ package com.wyl.category.category
 //
 ///**
 // * 分类右侧页面
+// * 使用RecyclerView滑动(已废弃, 改用LayoutManager的滑动方法)
 // */
 //class CategoryChildFragment : BindingFragment<CategoryChildFragmentBinding>(), ItemClickPresenter<Any> {
-//    private val viewModel: CategoryChildViewModel by viewModel()
+//    private val viewModel: CategoryChildViewModel by sharedViewModel()
 //
 //    private val mAdapter by lazy {
 //        MultiTypeAdapter(binding.recyclerView.context, viewModel.dataSource, object : MultiTypeAdapter.MultiViewTyper {
@@ -69,8 +70,8 @@ package com.wyl.category.category
 //
 //    }
 //
-//    override fun loadData() {
-//        viewModel.loadData()
+//    override fun loadTreeData() {
+//
 //    }
 //
 //    /**

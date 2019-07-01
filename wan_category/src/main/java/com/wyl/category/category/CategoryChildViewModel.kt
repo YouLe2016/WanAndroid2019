@@ -2,6 +2,7 @@ package com.wyl.category.category
 
 import android.databinding.ObservableArrayList
 import com.wyl.category.bean.CategoryBean
+import com.wyl.category.bean.NavigationBean
 import com.wyl.category.vm.ChildItemModel
 import com.wyl.category.vm.GroupItemModel
 import com.wyl.libbase.base.BaseViewModel
@@ -28,12 +29,22 @@ class CategoryChildViewModel : BaseViewModel() {
 //        }
 //    }
 
-    fun initData(list: List<CategoryBean>) {
+
+    @JvmOverloads
+    fun initData(list: List<CategoryBean>? = null, list2: List<NavigationBean>? = null) {
         var position = 0
-        list.forEach {
+        list?.forEach {
             val groupItem = GroupItemModel(it, position++)
             dataSource.add(groupItem)
             it.children?.forEach { child ->
+                val childItem = ChildItemModel(child, position)
+                dataSource.add(childItem)
+            }
+        }
+        list2?.forEach {
+            val groupItem = GroupItemModel(it, position++)
+            dataSource.add(groupItem)
+            it.articles?.forEach { child ->
                 val childItem = ChildItemModel(child, position)
                 dataSource.add(childItem)
             }

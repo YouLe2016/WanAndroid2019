@@ -12,7 +12,7 @@ android {
         versionName androidSdk.versionName
         testInstrumentationRunner androidSdk.testInstrumentationRunner
 
-//        multiDexEnabled true
+        multiDexEnabled true
     }
     buildTypes {
         debug {

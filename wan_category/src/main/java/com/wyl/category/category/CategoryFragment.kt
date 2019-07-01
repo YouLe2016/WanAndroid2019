@@ -1,8 +1,11 @@
 package com.wyl.category.category
 
 
+import android.os.Bundle
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.wyl.base.CategoryFragment
 import com.wyl.category.R
 import com.wyl.category.databinding.CategoryFragmentBinding
@@ -21,10 +24,13 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 @Route(path = CategoryFragment)
 class CategoryFragment : BindingFragment<CategoryFragmentBinding>(), ItemClickPresenter<LeftItemModel> {
-    private val viewModel: CategoryViewModel by viewModel()
-    private val childViewModel: CategoryChildViewModel by sharedViewModel()
+    val viewModel: CategoryViewModel by viewModel()
 
-    private val childFragment = CategoryChildFragment()
+    @Autowired(name = "type")
+    @JvmField
+    var type: String = ""
+
+    private lateinit var childFragment: CategoryChildFragment
 
     override fun onItemClick(v: View, item: LeftItemModel) {
         checked(item = item)
@@ -34,6 +40,11 @@ class CategoryFragment : BindingFragment<CategoryFragmentBinding>(), ItemClickPr
     override fun getLayoutId(): Int = R.layout.category_fragment
 
     override fun initView() {
+        ARouter.getInstance().inject(this)
+        childFragment = CategoryChildFragment()
+        childFragment.arguments = Bundle().apply {
+            putString("type", type)
+        }
         transact { replace(R.id.frameLayout, childFragment) }
 
         binding.recyclerView.apply {
@@ -45,9 +56,7 @@ class CategoryFragment : BindingFragment<CategoryFragmentBinding>(), ItemClickPr
         }
     }
 
-
     override fun loadData() {
-        viewModel.loadData(childViewModel)
     }
 
     fun checked(item: LeftItemModel? = null, position: Int = -1) {

@@ -11,9 +11,10 @@ import com.wyl.category.vm.GroupItemModel
 import com.wyl.category.vm.StringItemModel
 import com.wyl.libbase.base.BindingFragment
 import com.wyl.libbase.utils.KLog
+import com.wyl.libbase.utils.autoWired
 import io.ditclear.bindingadapter.ItemClickPresenter
 import io.ditclear.bindingadapter.MultiTypeAdapter
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 const val TYPE_GROUP = 3
 const val TYPE_CHILD = 1
@@ -22,15 +23,18 @@ const val TYPE_CHILD = 1
  * 分类右侧页面
  */
 class CategoryChildFragment : BindingFragment<CategoryChildFragmentBinding>(), ItemClickPresenter<Any> {
-    private val viewModel: CategoryChildViewModel by sharedViewModel()
+    private val viewModel: CategoryChildViewModel by viewModel()
 
     private val mAdapter by lazy {
-        MultiTypeAdapter(binding.recyclerView.context, viewModel.dataSource, object : MultiTypeAdapter.MultiViewTyper {
-            override fun getViewType(item: Any): Int = when (item) {
-                is GroupItemModel -> TYPE_GROUP
-                else -> TYPE_CHILD
-            }
-        }).apply {
+        MultiTypeAdapter(
+            binding.recyclerView.context,
+            viewModel.dataSource,
+            object : MultiTypeAdapter.MultiViewTyper {
+                override fun getViewType(item: Any): Int = when (item) {
+                    is GroupItemModel -> TYPE_GROUP
+                    else -> TYPE_CHILD
+                }
+            }).apply {
             addViewTypeToLayoutMap(TYPE_GROUP, R.layout.category_item_group)
             addViewTypeToLayoutMap(TYPE_CHILD, R.layout.category_item_child)
             itemPresenter = this@CategoryChildFragment
@@ -60,7 +64,7 @@ class CategoryChildFragment : BindingFragment<CategoryChildFragmentBinding>(), I
          * LayoutManager scrollTo系列方法: dx = [0], dy = [0], 只触发一次
          */
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            KLog.d("dx = [$dx], dy = [$dy]")
+            KLog.d("dx = [$dx], dy = [$dy], isUserScroll = $isUserScroll")
             if (isUserScroll) {
                 val position = mGridLayoutManager.findFirstVisibleItemPosition()
                 (parentFragment as CategoryFragment).checked(position = (viewModel.dataSource[position] as StringItemModel).position)
@@ -99,8 +103,15 @@ class CategoryChildFragment : BindingFragment<CategoryChildFragmentBinding>(), I
 
     }
 
-    override fun loadData() {
+    private val type by lazy { autoWired("type", "")!! }
 
+    override fun loadData() {
+        val fragment = parentFragment as CategoryFragment
+        if (type == "Navigation") {
+            fragment.viewModel.loadNavData(viewModel)
+        } else {
+            fragment.viewModel.loadTreeData(viewModel)
+        }
     }
 
     /**
@@ -119,6 +130,8 @@ class CategoryChildFragment : BindingFragment<CategoryChildFragmentBinding>(), I
         mGridLayoutManager.scrollToPositionWithOffset(position, 0)
 //        scroller.targetPosition = position
 //        mGridLayoutManager.startSmoothScroll(scroller)
+
+//        binding.recyclerView.scrollToPosition(position)
     }
 
 }

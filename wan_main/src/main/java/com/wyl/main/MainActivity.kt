@@ -1,6 +1,7 @@
 package com.wyl.main
 
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -16,33 +17,23 @@ import com.wyl.main.databinding.MainActivityBinding
 
 class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val homeFragment by lazy {
-        getFragment(HomeFragment)
-    }
+    private val homeFragment by lazy { getFragment(HomeFragment) }
 
-    private val systemFragment by lazy {
-        getFragment(CategoryFragment).apply {
-            this@MainActivity.transact {
-                add(R.id.rootView, this@apply)
-            }
-        }
-    }
+    private val systemFragment by lazy { getFragment(CategoryFragment) }
 
     private val navFragment by lazy {
-        NavFragment().apply {
-            this@MainActivity.transact {
-                add(R.id.rootView, this@apply)
-            }
+        getFragment(CategoryFragment) {
+            withString("type", "Navigation")
         }
+
+//        NavFragment().apply {
+//            this@MainActivity.transact {
+//                add(R.id.rootView, this@apply)
+//            }
+//        }
     }
 
-    private val todoFragment by lazy {
-        TodoFragment().apply {
-            this@MainActivity.transact {
-                add(R.id.rootView, this@apply)
-            }
-        }
-    }
+    private val todoFragment by lazy { TodoFragment() }
 
     override fun getLayoutId(): Int = R.layout.main_activity
 
@@ -70,25 +61,25 @@ class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNa
             .build()
             .addSimpleTabItemSelectedListener { index, old ->
                 when (index) {
-                    0 -> transact {
+                    0 -> {
                         show(homeFragment)
                         hide(systemFragment)
                         hide(navFragment)
                         hide(todoFragment)
                     }
-                    1 -> transact {
+                    1 -> {
                         hide(homeFragment)
                         show(systemFragment)
                         hide(navFragment)
                         hide(todoFragment)
                     }
-                    2 -> transact {
+                    2 -> {
                         hide(homeFragment)
                         hide(systemFragment)
                         show(navFragment)
                         hide(todoFragment)
                     }
-                    3 -> transact {
+                    3 -> {
                         hide(homeFragment)
                         hide(systemFragment)
                         hide(navFragment)
@@ -96,6 +87,20 @@ class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNa
                     }
                 }
             }
+    }
+
+    private fun show(fragment: Fragment) {
+        if (fragment.isAdded) {
+            transact { show(fragment) }
+        } else {
+            transact { add(R.id.rootView, fragment) }
+        }
+    }
+
+    private fun hide(fragment: Fragment) {
+        if (fragment.isAdded) {
+            transact { hide(fragment) }
+        }
     }
 
     override fun loadData() {
@@ -126,6 +131,7 @@ class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNa
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.

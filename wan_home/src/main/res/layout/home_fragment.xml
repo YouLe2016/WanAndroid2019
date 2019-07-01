@@ -26,7 +26,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             itemDecoration="@{presenter.getItemDecoration()}"
             app:adapter="@{presenter.getAdapter()}"
             android:layout_height="wrap_content"
