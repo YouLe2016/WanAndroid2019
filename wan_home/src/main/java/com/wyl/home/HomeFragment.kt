@@ -11,7 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.wyl.base.ACacheHelper
 import com.wyl.base.HomeFragment
 import com.wyl.base.LoginActivity
-import com.wyl.base.activity.openWebActivity
+import com.wyl.base.activity.openArticleDetailActivity
 import com.wyl.home.bean.ArticleData
 import com.wyl.home.databinding.HomeFragmentBinding
 import com.wyl.home.databinding.HomeItemBannerBinding
@@ -90,14 +90,14 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
             R.id.iv_like -> {
                 if (ACacheHelper.hasLogin()) {
                     val data = item as ArticleData.DatasBean
-                    if (data.collect) viewModel.uncollect(data) else viewModel.collect(data)
+                    if (data.collect) viewModel.unCollect(data) else viewModel.collect(data)
                 } else {
                     openActivity(LoginActivity)
                 }
             }
             R.id.layoutArticle -> {
                 val bean = item as ArticleData.DatasBean
-                openWebActivity(bean.link, bean.title, bean.id, bean.author)
+                openArticleDetailActivity(bean.link, bean.title, bean.id, bean.author)
             }
         }
     }

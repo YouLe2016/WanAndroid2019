@@ -11,14 +11,14 @@ import android.view.WindowManager
 /**
  * 自动获取属性值
  */
-fun <T> AppCompatActivity.autoWired(key: String, default: T? = null): T? {
-    return intent?.extras?.let {
+fun <T> AppCompatActivity.autoWired(key: String, default: T): T {
+    return intent.extras!!.let {
         if (it.get(key) != null) {
             try {
                 it.get(key) as T
             } catch (e: ClassCastException) {
                 e.printStackTrace()
-                null
+                default
             }
         } else default
     }

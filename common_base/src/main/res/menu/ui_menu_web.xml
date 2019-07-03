@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_collect"
+        android:title="@string/ui_collect"
+        app:showAsAction="collapseActionView"/>
+    <!--
+        <item
+            android:id="@+id/action_search"
+            android:title="Search"
+            app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/action_notifications"
+            android:title="notifications"
+            app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/action_settings"
+            android:orderInCategory="100"
+            android:title="notifications"
+            app:showAsAction="never" />
+    -->
+</menu>

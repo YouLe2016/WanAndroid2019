@@ -41,6 +41,7 @@ class CategoryViewModel : BaseViewModel() {
                     position += it.children?.size ?: 0
                     model
                 }
+                leftData[0].checked.set(true)
                 childViewModel.initData(list = list)
             }, {
                 onError(it)
@@ -62,6 +63,7 @@ class CategoryViewModel : BaseViewModel() {
                     position += it.articles?.size ?: 0
                     model
                 }
+                leftData[0].checked.set(true)
                 childViewModel.initData(list2 = list)
             }, {
                 onError(it)
@@ -87,6 +89,5 @@ class CategoryViewModel : BaseViewModel() {
             currentItem!!.checked.set(true)
         }
     }
-
 
 }

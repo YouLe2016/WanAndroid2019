@@ -5,7 +5,7 @@
 
     <application>
         <activity
-            android:name=".activity.WebActivity"
+            android:name=".activity.ArticleDetailActivity"
             android:theme="@style/UI_AppTheme.NoActionBar"/>
     </application>
 

@@ -8,7 +8,7 @@ import com.wyl.libbase.init.IModuleInit
 val ModuleInit = arrayOf(
     "$host.base.init.BaseModuleInit",
     "$host.main.MainModuleInit",
-    "$host.home.HomeModuleInit",
+    "$host.home.DebugHomeModuleInit",
     "$host.login.LoginModuleInit",
     "$host.category.DebugCategoryModuleInit"
 )

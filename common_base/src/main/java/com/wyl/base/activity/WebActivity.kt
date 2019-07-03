@@ -1,6 +1,5 @@
 package com.wyl.base.activity
 
-import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.MenuItem
@@ -8,44 +7,27 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.LinearLayout
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.AgentWebSettingsImpl
 import com.just.agentweb.IAgentWebSettings
 import com.wyl.base.R
-import com.wyl.base.WebActivity
 import com.wyl.base.databinding.UiWebActivityBinding
 import com.wyl.libbase.base.BindingActivity
 import com.wyl.libbase.utils.KLog
-import com.wyl.libbase.utils.openActivity
+import com.wyl.libbase.utils.autoWired
 
-fun openWebActivity(url: String, title: String? = null, id: Int? = null, author: String? = null) {
-    openActivity(
-        WebActivity,
-        Bundle().apply {
-            putString("url", url)
-            if (title != null) putString("title", title)
-            if (id != null) putInt("id", id)
-            if (author != null) putString("author", author)
-        }
-    )
-}
+open class WebActivity : BindingActivity<UiWebActivityBinding>() {
+//    @Autowired(name = "url")
+//    @JvmField
+//    var mUrl: String = ""
+//    @Autowired(name = "title")
+//    @JvmField
+//    var mTitle: String = ""
 
-@Route(path = WebActivity)
-class WebActivity : BindingActivity<UiWebActivityBinding>() {
+    val mUrl: String by lazy { autoWired("url", "") }
+    val mTitle: String by lazy { autoWired("title", "") }
 
-    @Autowired(name = "url")
-    @JvmField
-    var mUrl: String = ""
-    @Autowired(name = "title")
-    @JvmField
-    var mTitle: String = ""
-
-    /**
-     * 页面显示适配屏幕
-     */
+    /**页面显示适配屏幕 */
     private val agentWebSettings by lazy {
         object : AgentWebSettingsImpl() {
             override fun toSetting(webView: WebView): IAgentWebSettings<*> {
@@ -82,28 +64,38 @@ class WebActivity : BindingActivity<UiWebActivityBinding>() {
     override fun getLayoutId() = R.layout.ui_web_activity
 
     override fun initView() {
-    }
-
-    override fun loadData() {
-        ARouter.getInstance().inject(this)
         val toolbar = binding.titleBar.toolbar
         toolbar.title = mTitle
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
+        return if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
         }
-        return true
+    }
+
+    override fun loadData() {
+
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        KLog.d("keyCode = $keyCode, event = $event")
         // AgentWeb 事件处理
         return if (mAgentWeb.handleKeyEvent(keyCode, event)) {
             true
         } else super.onKeyDown(keyCode, event)
+    }
+
+    override fun onBackPressed() {
+        KLog.d("before")
+        super.onBackPressed()
+        KLog.d("after")
     }
 
     // AgentWeb 跟随 Activity Or Fragment生命周期，释放 CPU 更省电 。

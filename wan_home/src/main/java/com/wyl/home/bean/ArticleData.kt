@@ -55,8 +55,8 @@ class ArticleData(
          * zan : 0
          */
 
-        var apkLink: String? = null
-        var author: String? = null
+        var apkLink: String = ""
+        var author: String = ""
         var chapterId: Int = 0
         var chapterName: String? = null
         @Bindable
@@ -71,7 +71,7 @@ class ArticleData(
         var desc: String? = null
         var envelopePic: String? = null
         var isFresh: Boolean = false
-        var id: Int = 0
+        var id: Int = -1
         lateinit var link: String
         var niceDate: String? = null
         var origin: String? = null
@@ -79,7 +79,7 @@ class ArticleData(
         var publishTime: Long = 0
         var superChapterId: Int = 0
         var superChapterName: String? = null
-        var title: String? = null
+        var title: String = ""
         var type: Int = 0
         var userId: Int = 0
         var visible: Int = 0

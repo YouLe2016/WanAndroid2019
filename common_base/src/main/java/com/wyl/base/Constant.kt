@@ -41,6 +41,11 @@ const val NAV_CATEGORY = "${BASE_URL}navi/json"
 // https://www.wanandroid.com/lg/collect/1165/json
 const val COLLECT_IN = "${BASE_URL}lg/collect/"
 /**
+ * 收藏站外文章
+ */
+const val COLLECT_OUT = "${BASE_URL}lg/collect/add/json"
+
+/**
  * 取消收藏(文章列表)
  */
 const val UNCOLLECT_HOME = "${BASE_URL}lg/uncollect_originId/"

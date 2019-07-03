@@ -1,3 +1,8 @@
 <resources>
     <string name="ui_app_name">common_base</string>
+
+    <string name="ui_collect">收藏</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.wyl.lewanandroid
 
 import android.app.Application
+import com.wyl.base.baseModule
 import com.wyl.base.init.initModuleAhead
 import com.wyl.base.init.initModuleLow
 import com.wyl.category.categoryModule
@@ -14,7 +15,7 @@ class App : Application() {
         initModuleAhead(this)
 
         startKoin {
-            modules(homeModule + loginModule + categoryModule)
+            modules(homeModule + loginModule + categoryModule + baseModule)
         }
 
         initModuleLow(this)

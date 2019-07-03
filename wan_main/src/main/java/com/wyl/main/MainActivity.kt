@@ -22,9 +22,7 @@ class MainActivity : BindingActivity<MainActivityBinding>(), NavigationView.OnNa
     private val systemFragment by lazy { getFragment(CategoryFragment) }
 
     private val navFragment by lazy {
-        getFragment(CategoryFragment) {
-            withString("type", "Navigation")
-        }
+        getFragment(CategoryFragment) { withString("type", "Navigation") }
 
 //        NavFragment().apply {
 //            this@MainActivity.transact {
