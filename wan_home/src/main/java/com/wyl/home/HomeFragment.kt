@@ -3,12 +3,16 @@ package com.wyl.home
 
 import android.arch.lifecycle.Observer
 import android.databinding.ViewDataBinding
+import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.wyl.base.ACacheHelper
+import com.wyl.base.EVENT_LOGIN
 import com.wyl.base.HomeFragment
 import com.wyl.base.LoginActivity
 import com.wyl.base.activity.openArticleDetailActivity
@@ -23,6 +27,8 @@ import com.wyl.libbase.utils.openActivity
 import com.wyl.libbase.utils.toast
 import com.youth.banner.listener.OnBannerListener
 import io.ditclear.bindingadapter.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import org.koin.android.viewmodel.ext.android.viewModel
 
 const val TYPE_BANNER = 3
@@ -97,7 +103,7 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
             }
             R.id.layoutArticle -> {
                 val bean = item as ArticleData.DatasBean
-                openArticleDetailActivity(bean.link, bean.title, bean.id, bean.author)
+                openArticleDetailActivity(bean.link, bean.title, bean.id, bean.author,bean.collect)
             }
         }
     }
@@ -118,6 +124,23 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
                     }
                 }
             }
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        EventBus.getDefault().register(this)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
+
+    @Subscribe
+    fun onEvent(event: String) {
+        if (event == EVENT_LOGIN) {
+            binding.refreshLayout.startRefresh()
         }
     }
 

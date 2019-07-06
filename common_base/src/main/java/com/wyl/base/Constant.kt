@@ -1,5 +1,10 @@
 package com.wyl.base
 
+/* EventBus */
+/**
+ * 登录成功的事件回调
+ */
+const val EVENT_LOGIN = "登录成功的事件回调"
 
 /* ACache */
 const val USERNAME = "username"

@@ -12,7 +12,9 @@ import android.view.WindowManager
  * 自动获取属性值
  */
 fun <T> AppCompatActivity.autoWired(key: String, default: T): T {
+    KLog.d("key = $key")
     return intent.extras!!.let {
+        KLog.d("value = ${it.get(key)}")
         if (it.get(key) != null) {
             try {
                 it.get(key) as T

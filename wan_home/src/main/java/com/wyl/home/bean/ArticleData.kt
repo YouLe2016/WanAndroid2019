@@ -59,14 +59,6 @@ class ArticleData(
         var author: String = ""
         var chapterId: Int = 0
         var chapterName: String? = null
-        @Bindable
-        var collect: Boolean = false
-            set(value) {
-                if (field != value) {
-                    field = value
-                    notifyPropertyChanged(BR.collect)
-                }
-            }
         var courseId: Int = 0
         var desc: String? = null
         var envelopePic: String? = null
@@ -85,6 +77,15 @@ class ArticleData(
         var visible: Int = 0
         var zan: Int = 0
         var tags: List<TagsBean>? = null
+
+        @Bindable
+        var collect: Boolean = false
+            set(value) {
+                if (field != value) {
+                    field = value
+                    notifyPropertyChanged(BR.collect)
+                }
+            }
 
         class TagsBean {
             /**

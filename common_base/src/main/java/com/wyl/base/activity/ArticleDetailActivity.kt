@@ -1,18 +1,19 @@
 package com.wyl.base.activity
 
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.lzg.extend.toDisposables
-import com.wyl.base.ACacheHelper
-import com.wyl.base.ArticleDetailActivity
-import com.wyl.base.LoginActivity
-import com.wyl.base.R
+import com.wyl.base.*
 import com.wyl.base.repository.ArticleRepository
 import com.wyl.libbase.utils.autoWired
 import com.wyl.libbase.utils.openActivity
 import com.wyl.libbase.utils.toast
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import org.koin.android.ext.android.inject
+
 
 fun openArticleDetailActivity(
     url: String,
@@ -45,13 +46,17 @@ class ArticleDetailActivity : WebActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.ui_menu_web, menu)
+        menuItem = menu?.getItem(0)!!
+        menuItem.title = if (mCollect) getString(R.string.ui_unCollect) else getString(R.string.ui_collect)
         return true
     }
+
+    lateinit var menuItem: MenuItem
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.action_collect) {
             if (ACacheHelper.hasLogin()) {
-                if (mCollect) unCollect() else collect()
+                collectOrUnCollect()
             } else {
                 openActivity(LoginActivity)
             }
@@ -59,17 +64,20 @@ class ArticleDetailActivity : WebActivity() {
         } else super.onOptionsItemSelected(item)
     }
 
+    private fun collectOrUnCollect() = if (mCollect) unCollect() else collect()
+
     private fun unCollect() {
         repository.unCollectHome(mId)
             .doOnSubscribe { }
             .doFinally { }
             .subscribe({
-                toast("取消收藏")
+                mCollect = false
+                menuItem.title = getString(R.string.ui_collect)
+                toast(getString(R.string.ui_unCollect))
             }, {
                 toast(onError(it))
             }).toDisposables(disposables)
     }
-
 
     private fun collect() {
         if (mId == -1) {
@@ -79,10 +87,29 @@ class ArticleDetailActivity : WebActivity() {
         }.doOnSubscribe { }
             .doFinally { }
             .subscribe({
-                toast("收藏成功")
+                mCollect = true
+                menuItem.title = getString(R.string.ui_unCollect)
+                toast(getString(R.string.ui_collect_success))
             }, {
                 toast(onError(it))
             }).toDisposables(disposables)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
+
+    @Subscribe
+    fun onEvent(event: String) {
+        if (event == EVENT_LOGIN) {
+            collectOrUnCollect()
+        }
     }
 
 }

@@ -54,6 +54,9 @@ ext {
             //router
             "arouter-api"           : 'com.alibaba:arouter-api:1.4.1',
             "arouter-compiler"      : 'com.alibaba:arouter-compiler:1.2.2',
+
+            //EventBus
+            'eventbus'              : 'org.greenrobot:eventbus:3.0.0',
     ]
 
     koin = [

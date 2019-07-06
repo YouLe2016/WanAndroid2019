@@ -41,5 +41,6 @@ dependencies {
     api 'com.just.agentweb:agentweb:4.0.2'
 
     api dependency["arouter-api"]
+    api dependency["eventbus"]
 //    api 'com.android.support:multidex:1.0.3'
 }
