@@ -12,7 +12,7 @@ package com.wyl.category.category
 //import io.ditclear.bindingadapter.ItemClickPresenter
 //import io.ditclear.bindingadapter.MultiTypeAdapter
 //import org.koin.android.viewmodel.ext.android.sharedViewModel
-//import org.koin.android.viewmodel.ext.android.viewModel
+//import org.koin.android.viewmodel.ext.android.articleViewModel
 //
 //const val TYPE_GROUP = 3
 //const val TYPE_CHILD = 1
@@ -22,10 +22,10 @@ package com.wyl.category.category
 // * 使用RecyclerView滑动(已废弃, 改用LayoutManager的滑动方法)
 // */
 //class CategoryChildFragment : BindingFragment<CategoryChildFragmentBinding>(), ItemClickPresenter<Any> {
-//    private val viewModel: CategoryChildViewModel by sharedViewModel()
+//    private val articleViewModel: CategoryChildViewModel by sharedViewModel()
 //
 //    private val mAdapter by lazy {
-//        MultiTypeAdapter(binding.recyclerView.context, viewModel.dataSource, object : MultiTypeAdapter.MultiViewTyper {
+//        MultiTypeAdapter(binding.recyclerView.context, articleViewModel.dataSource, object : MultiTypeAdapter.MultiViewTyper {
 //            override fun getViewType(item: Any): Int = when (item) {
 //                is GroupItemModel -> TYPE_GROUP
 //                else -> TYPE_CHILD

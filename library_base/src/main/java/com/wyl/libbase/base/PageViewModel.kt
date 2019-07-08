@@ -13,13 +13,11 @@ abstract class PageViewModel : BaseViewModel() {
             override fun onRefresh(refreshLayout: TwinklingRefreshLayout) {
                 refresh.set(true)
                 refresh()
-//                Handler().postDelayed({ refreshLayout.finishRefreshing() }, 2000)
             }
 
             override fun onLoadMore(refreshLayout: TwinklingRefreshLayout) {
                 loadMore.set(true)
                 loadMore()
-//                Handler().postDelayed({ refreshLayout.finishRefreshing() }, 2000)
             }
 
             override fun onRefreshCanceled() {

@@ -30,6 +30,12 @@ const val HOME_ARTICLE_LIST = "${BASE_URL}article/list/"
  * 体系数据
  */
 const val TREE_CATEGORY = "${BASE_URL}tree/json"
+/**
+ * 知识体系下的文章
+ *
+ * https://www.wanandroid.com/article/list/0/json?cid=60
+ */
+const val TREE_ARTICLE = "${BASE_URL}article/list/"
 
 
 /* **************** 3. 导航 **********************/

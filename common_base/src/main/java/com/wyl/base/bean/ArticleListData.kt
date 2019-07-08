@@ -1,8 +1,4 @@
-package com.wyl.home.bean
-
-import android.databinding.BaseObservable
-import android.databinding.Bindable
-import com.wyl.home.BR
+package com.wyl.base.bean
 
 /**
  *@auther tangedegushi
@@ -19,82 +15,12 @@ import com.wyl.home.BR
  * size : 20
  * total : 5666
  */
-class ArticleData(
+class ArticleListData(
     var curPage: Int = 0,
     var offset: Int = 0,
     var over: Boolean = false,
     var pageCount: Int = 0,
     var size: Int = 0,
     var total: Int = 0,
-    var datas: List<DatasBean>? = null
-) {
-    class DatasBean : BaseObservable() {
-        /**
-         * apkLink :
-         * author : 郭霖
-         * chapterId : 409
-         * chapterName : 郭霖
-         * collect : false
-         * courseId : 13
-         * desc :
-         * envelopePic :
-         * fresh : false
-         * id : 7475
-         * link : https://mp.weixin.qq.com/s/BT3a3TMm_mZu0hdVd1bvgA
-         * niceDate : 2018-11-07
-         * origin :
-         * projectLink :
-         * publishTime : 1541520000000
-         * superChapterId : 408
-         * superChapterName : 公众号
-         * tags : [{"name":"公众号","url":"/wxarticle/list/409/1"}]
-         * title : 一篇好文之Android数据库GreenDao的完全解析
-         * type : 0
-         * userId : -1
-         * visible : 1
-         * zan : 0
-         */
-
-        var apkLink: String = ""
-        var author: String = ""
-        var chapterId: Int = 0
-        var chapterName: String? = null
-        var courseId: Int = 0
-        var desc: String? = null
-        var envelopePic: String? = null
-        var isFresh: Boolean = false
-        var id: Int = -1
-        lateinit var link: String
-        var niceDate: String? = null
-        var origin: String? = null
-        var projectLink: String? = null
-        var publishTime: Long = 0
-        var superChapterId: Int = 0
-        var superChapterName: String? = null
-        var title: String = ""
-        var type: Int = 0
-        var userId: Int = 0
-        var visible: Int = 0
-        var zan: Int = 0
-        var tags: List<TagsBean>? = null
-
-        @Bindable
-        var collect: Boolean = false
-            set(value) {
-                if (field != value) {
-                    field = value
-                    notifyPropertyChanged(BR.collect)
-                }
-            }
-
-        class TagsBean {
-            /**
-             * name : 公众号
-             * url : /wxarticle/list/409/1
-             */
-
-            var name: String? = null
-            var url: String? = null
-        }
-    }
-}
+    var datas: List<ArticleData>? = null
+)

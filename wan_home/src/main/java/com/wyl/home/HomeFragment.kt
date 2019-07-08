@@ -2,6 +2,7 @@ package com.wyl.home
 
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
@@ -11,12 +12,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.wyl.base.ACacheHelper
-import com.wyl.base.EVENT_LOGIN
-import com.wyl.base.HomeFragment
-import com.wyl.base.LoginActivity
+import com.wyl.base.*
+import com.wyl.base.activity.ArticleTypeActivity
 import com.wyl.base.activity.openArticleDetailActivity
-import com.wyl.home.bean.ArticleData
+import com.wyl.base.bean.ArticleData
 import com.wyl.home.databinding.HomeFragmentBinding
 import com.wyl.home.databinding.HomeItemBannerBinding
 import com.wyl.home.databinding.HomeItemHotkeyBinding
@@ -74,7 +73,7 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
             }).apply {
             addViewTypeToLayoutMap(TYPE_BANNER, R.layout.home_item_banner)
             addViewTypeToLayoutMap(TYPE_HOTKEY, R.layout.home_item_hotkey)
-            addViewTypeToLayoutMap(TYPE_ARTICLE, R.layout.home_item_article)
+            addViewTypeToLayoutMap(TYPE_ARTICLE, R.layout.ui_item_article)
             itemDecorator = this@HomeFragment
             itemPresenter = this@HomeFragment
         }
@@ -84,7 +83,8 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
             TYPE_BANNER -> {
                 val binding = holder.binding as HomeItemBannerBinding
                 binding.listener = OnBannerListener {
-                    context?.toast(binding.item!!.titles[it])
+                    val data = binding.item!!.data[it]
+                    openArticleDetailActivity(data.url, id = data.id)
                 }
             }
             TYPE_HOTKEY -> itemHotKeyInitView(holder.binding as HomeItemHotkeyBinding)
@@ -95,15 +95,23 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
         when (v.id) {
             R.id.iv_like -> {
                 if (ACacheHelper.hasLogin()) {
-                    val data = item as ArticleData.DatasBean
+                    val data = item as ArticleData
                     if (data.collect) viewModel.unCollect(data) else viewModel.collect(data)
                 } else {
                     openActivity(LoginActivity)
                 }
             }
             R.id.layoutArticle -> {
-                val bean = item as ArticleData.DatasBean
-                openArticleDetailActivity(bean.link, bean.title, bean.id, bean.author,bean.collect)
+                val bean = item as ArticleData
+                openArticleDetailActivity(bean.link, bean.title, bean.id, bean.author, bean.collect)
+            }
+            R.id.tv_chapter_name -> {
+                val bean = item as ArticleData
+                startActivity(
+                    Intent(context, ArticleTypeActivity::class.java)
+                        .putExtra("title", bean.chapterName)
+                        .putExtra("id", bean.chapterId)
+                )
             }
         }
     }

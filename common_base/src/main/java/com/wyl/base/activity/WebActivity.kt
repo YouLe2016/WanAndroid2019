@@ -2,7 +2,6 @@ package com.wyl.base.activity
 
 import android.text.TextUtils
 import android.view.KeyEvent
-import android.view.MenuItem
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -11,18 +10,12 @@ import com.just.agentweb.AgentWeb
 import com.just.agentweb.AgentWebSettingsImpl
 import com.just.agentweb.IAgentWebSettings
 import com.wyl.base.R
-import com.wyl.base.databinding.UiWebActivityBinding
 import com.wyl.libbase.base.BindingActivity
+import com.wyl.libbase.databinding.UiFrameActivityBinding
 import com.wyl.libbase.utils.KLog
 import com.wyl.libbase.utils.autoWired
 
-open class WebActivity : BindingActivity<UiWebActivityBinding>() {
-//    @Autowired(name = "url")
-//    @JvmField
-//    var mUrl: String = ""
-//    @Autowired(name = "title")
-//    @JvmField
-//    var mTitle: String = ""
+open class WebActivity : BindingActivity<UiFrameActivityBinding>() {
 
     val mUrl: String by lazy { autoWired("url", "") }
     val mTitle: String by lazy { autoWired("title", "") }
@@ -61,23 +54,13 @@ open class WebActivity : BindingActivity<UiWebActivityBinding>() {
             .go(mUrl)
     }
 
-    override fun getLayoutId() = R.layout.ui_web_activity
+    override fun getLayoutId() = R.layout.ui_frame_activity
 
     override fun initView() {
         val toolbar = binding.titleBar.toolbar
         toolbar.title = mTitle
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == android.R.id.home) {
-            onBackPressed()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
     }
 
     override fun loadData() {

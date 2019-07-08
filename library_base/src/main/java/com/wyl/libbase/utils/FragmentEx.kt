@@ -6,14 +6,16 @@ import android.support.v4.app.FragmentTransaction
 /**
  * 自动获取属性值
  */
-fun <T> Fragment.autoWired(key: String, default: T? = null): T? {
-    return arguments?.let {
+fun <T> Fragment.autoWired(key: String, default: T): T {
+    KLog.d("key = $key")
+    return arguments!!.let {
+        KLog.d("value = ${it.get(key)}")
         if (it.get(key) != null) {
             try {
                 it.get(key) as T
             } catch (e: ClassCastException) {
                 e.printStackTrace()
-                null
+                default
             }
         } else default
     }

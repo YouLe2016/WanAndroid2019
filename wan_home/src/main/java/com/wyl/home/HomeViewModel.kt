@@ -11,8 +11,9 @@ import com.wyl.base.HOME_ARTICLE_LIST
 import com.wyl.base.HOME_BANNER
 import com.wyl.base.HOME_FRIEND
 import com.wyl.base.HOME_HOTKEY
+import com.wyl.base.bean.ArticleData
 import com.wyl.base.repository.ArticleRepository
-import com.wyl.home.bean.ArticleData
+import com.wyl.base.bean.ArticleListData
 import com.wyl.home.bean.BannerData
 import com.wyl.home.bean.FriendData
 import com.wyl.home.bean.HotKeyData
@@ -86,13 +87,13 @@ class HomeViewModel(private val repository: ArticleRepository) : PageViewModel()
             .map { friendItemViewModel = HotKeyItemViewModel("常用网站", data2 = it.data) }
 
     private fun loadArticleList() =
-        OkGo.get<BaseResponse<ArticleData>>("$HOME_ARTICLE_LIST$page/json")
-            .converter(object : JsonConvert<BaseResponse<ArticleData>>() {})
-            .adapt(ObservableBody<BaseResponse<ArticleData>>())
+        OkGo.get<BaseResponse<ArticleListData>>("$HOME_ARTICLE_LIST$page/json")
+            .converter(object : JsonConvert<BaseResponse<ArticleListData>>() {})
+            .adapt(ObservableBody<BaseResponse<ArticleListData>>())
             .map { it.data }
 
     /** 收藏文章 */
-    fun collect(data: ArticleData.DatasBean) {
+    fun collect(data: ArticleData) {
         if (data.id == -1) {
             repository.collectOut(data.title, data.author, data.link)
         } else {
@@ -109,7 +110,7 @@ class HomeViewModel(private val repository: ArticleRepository) : PageViewModel()
 
 
     /** 取消收藏 */
-    fun unCollect(data: ArticleData.DatasBean) {
+    fun unCollect(data: ArticleData) {
         repository.unCollectHome(data.id)
             .doOnSubscribe { loading.set(true) }
             .doFinally { loading.set(false) }
@@ -122,7 +123,7 @@ class HomeViewModel(private val repository: ArticleRepository) : PageViewModel()
     }
 
 
-    class BannerItemViewModel(data: List<BannerData>) : ViewModel() {
+    class BannerItemViewModel(val data: List<BannerData>) : ViewModel() {
         val urls: MutableList<String> = mutableListOf()
         val titles: MutableList<String> = mutableListOf()
 

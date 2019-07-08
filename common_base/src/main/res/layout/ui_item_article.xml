@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.wyl.home.bean.ArticleData.DatasBean"/>
+            type="com.wyl.base.bean.ArticleData"/>
 
         <variable
             name="presenter"
@@ -57,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@{item.chapterName}"
+                android:onClick="@{(v)->presenter.onItemClick(v,item)}"
                 tools:text="TextView"
                 android:textColor="@color/ui_article_type_color"
                 app:layout_constraintStart_toEndOf="@+id/tv_super_chapter_name"

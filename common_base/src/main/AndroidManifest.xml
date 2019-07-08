@@ -4,6 +4,8 @@
     package="com.wyl.base">
 
     <application>
+        <activity android:name=".activity.ArticleTypeActivity">
+        </activity>
         <activity
             android:name=".activity.ArticleDetailActivity"
             android:theme="@style/UI_AppTheme.NoActionBar"/>

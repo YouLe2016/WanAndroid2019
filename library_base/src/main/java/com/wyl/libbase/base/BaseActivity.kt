@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.menu.MenuBuilder
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.google.gson.JsonSyntaxException
 import com.lzy.okgo.exception.HttpException
@@ -74,6 +75,16 @@ abstract class BaseActivity : AppCompatActivity(), Presenter {
     override fun onDestroy() {
         disposables.clear()
         super.onDestroy()
+    }
+
+    // Toolbar左侧返回键处理
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
     }
 
 }
