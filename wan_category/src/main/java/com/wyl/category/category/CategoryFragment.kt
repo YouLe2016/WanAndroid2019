@@ -15,7 +15,7 @@ import com.wyl.libbase.binding.recyclerview.RecyclerViewDivider
 import com.wyl.libbase.utils.transact
 import io.ditclear.bindingadapter.ItemClickPresenter
 import io.ditclear.bindingadapter.SingleTypeAdapter
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import kotlinx.android.synthetic.main.category_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -54,6 +54,8 @@ class CategoryFragment : BindingFragment<CategoryFragmentBinding>(), ItemClickPr
                     itemPresenter = this@CategoryFragment
                 }
         }
+
+        recyclerView.childCount
     }
 
     override fun loadData() {

@@ -58,9 +58,12 @@ class CategoryChildFragment : BindingFragment<CategoryChildFragmentBinding>(), I
         /**
          * RecyclerView滚动时回调
          *
+         * 以RecyclerView本身为参考系
+         *
          * [dx]: x方向上的滚动量   右+左-
          *
          * [dy]: y方向上的滚动量   下+上-
+         *
          * LayoutManager scrollTo系列方法: dx = [0], dy = [0], 只触发一次
          */
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -86,7 +89,6 @@ class CategoryChildFragment : BindingFragment<CategoryChildFragmentBinding>(), I
             KLog.d("newState = [${newState}]")
             isUserScroll = newState != 0
         }
-
     }
 
     override fun initView() {

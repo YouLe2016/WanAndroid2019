@@ -7,13 +7,10 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.support.annotation.IntDef
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy.SOURCE
 
 
 /**
@@ -21,12 +18,8 @@ import java.lang.annotation.RetentionPolicy.SOURCE
  *@creat 2018/11/14
  *@Decribe
  */
-class RecyclerViewDivider(context: Context, @RecyclerViewDivider.OrientationMode orientation: Int) :
+class RecyclerViewDivider(context: Context, orientation: Int) :
     RecyclerView.ItemDecoration() {
-
-    @IntDef(HORIZONTAL, VERTICAL, BOTH)
-    @Retention(SOURCE)
-    annotation class OrientationMode
 
     companion object {
         const val HORIZONTAL = 0

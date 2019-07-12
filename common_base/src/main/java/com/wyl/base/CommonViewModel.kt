@@ -28,7 +28,7 @@
 package com.wyl.base
 
 import com.lzg.extend.toDisposables
-import com.wyl.base.bean.ArticleData
+import com.wyl.base.bean.ArticleBean
 import com.wyl.base.repository.ArticleRepository
 import com.wyl.libbase.base.BaseViewModel
 
@@ -40,7 +40,7 @@ import com.wyl.libbase.base.BaseViewModel
 class CommonViewModel(private val repository: ArticleRepository) : BaseViewModel() {
 
     /** 收藏文章 */
-    fun collect(data: ArticleData) {
+    fun collect(data: ArticleBean) {
         if (data.id == -1) {
             repository.collectOut(data.title, data.author, data.link)
         } else {
@@ -49,7 +49,7 @@ class CommonViewModel(private val repository: ArticleRepository) : BaseViewModel
             .doFinally { loading.set(false) }
             .subscribe({
                 data.collect = !data.collect
-                error.value = "收藏成功"
+                success.value = "收藏成功"
             }, {
                 onError(it)
             }).toDisposables(disposables)
@@ -57,7 +57,7 @@ class CommonViewModel(private val repository: ArticleRepository) : BaseViewModel
 
 
     /** 取消收藏 */
-    fun unCollect(data: ArticleData) {
+    fun unCollect(data: ArticleBean) {
         repository.unCollectHome(data.id)
             .doOnSubscribe { loading.set(true) }
             .doFinally { loading.set(false) }

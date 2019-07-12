@@ -7,7 +7,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     single { ArticleRepository() }
-    viewModel { (id: Int) -> ArticleTypeViewModel(id) }
+    viewModel { (id: Int, key: String) -> ArticleTypeViewModel(id, key) }
     viewModel { CommonViewModel(get()) }
 }
 

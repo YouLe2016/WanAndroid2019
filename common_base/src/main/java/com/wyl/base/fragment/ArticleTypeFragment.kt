@@ -1,16 +1,15 @@
 package com.wyl.base.fragment
 
-
 import android.arch.lifecycle.Observer
 import android.databinding.ViewDataBinding
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.LayoutInflater
 import android.view.View
-import com.wyl.base.ACacheHelper
-import com.wyl.base.CommonViewModel
-import com.wyl.base.LoginActivity
-import com.wyl.base.R
+import android.view.ViewGroup
+import com.wyl.base.*
 import com.wyl.base.activity.openArticleDetailActivity
-import com.wyl.base.bean.ArticleData
+import com.wyl.base.bean.ArticleBean
 import com.wyl.base.databinding.UiItemArticleBinding
 import com.wyl.libbase.base.BindingFragment
 import com.wyl.libbase.binding.recyclerview.RecyclerViewSpace
@@ -22,13 +21,26 @@ import io.ditclear.bindingadapter.BindingViewHolder
 import io.ditclear.bindingadapter.ItemClickPresenter
 import io.ditclear.bindingadapter.ItemDecorator
 import io.ditclear.bindingadapter.SingleTypeAdapter
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
+fun getArticleTypeFragment(id: Int = -1, key: String = ""): ArticleTypeFragment {
+    val fragment = ArticleTypeFragment()
+    fragment.arguments = Bundle().apply {
+        if (id != -1) putInt("id", id)
+        if (key.isNotEmpty()) putString("key", key)
+    }
+    return fragment
+}
 
-class ArticleTypeFragment : BindingFragment<UiListFragmentBinding>(), ItemClickPresenter<ArticleData>, ItemDecorator {
+class ArticleTypeFragment : BindingFragment<UiListFragmentBinding>(), ItemClickPresenter<ArticleBean>, ItemDecorator {
 
-    private val articleViewModel: ArticleTypeViewModel by viewModel { parametersOf(autoWired("id", -1)) }
+    private val mId by lazy { autoWired("id", -1) }
+    private val mKey by lazy { autoWired("key", "") }
+
+    private val articleViewModel: ArticleTypeViewModel by viewModel { parametersOf(mId, mKey) }
     private val commonViewModel: CommonViewModel by viewModel()
 
     private val mItemDecoration by lazy { RecyclerViewSpace() }
@@ -42,11 +54,11 @@ class ArticleTypeFragment : BindingFragment<UiListFragmentBinding>(), ItemClickP
             articleViewModel.dataSource
         ).apply {
             itemPresenter = this@ArticleTypeFragment
-            itemDecorator = this@ArticleTypeFragment
+            if (mId != -1) itemDecorator = this@ArticleTypeFragment
         }
     }
 
-    override fun onItemClick(v: View, item: ArticleData) {
+    override fun onItemClick(v: View, item: ArticleBean) {
         when (v.id) {
             R.id.iv_like -> {
                 if (ACacheHelper.hasLogin()) {
@@ -56,8 +68,7 @@ class ArticleTypeFragment : BindingFragment<UiListFragmentBinding>(), ItemClickP
                 }
             }
             R.id.layoutArticle -> {
-                val bean = item as ArticleData
-                openArticleDetailActivity(bean.link, bean.title, bean.id, bean.author, bean.collect)
+                openArticleDetailActivity(item.link, item.title, item.id, item.author, item.collect)
             }
         }
     }
@@ -81,10 +92,31 @@ class ArticleTypeFragment : BindingFragment<UiListFragmentBinding>(), ItemClickP
     override fun loadData() {
         binding.refreshLayout.startRefresh()
 
+        commonViewModel.success.observe(this, Observer {
+            context?.toast(it ?: "")
+        })
+
         commonViewModel.error.observe(this, Observer {
             context?.toast(it ?: "")
         })
+
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        EventBus.getDefault().register(this)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
+
+    @Subscribe
+    fun onEvent(event: String) {
+        if (event == EVENT_LOGIN) {
+            binding.refreshLayout.startRefresh()
+        }
+    }
 
 }

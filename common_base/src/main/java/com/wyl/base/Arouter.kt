@@ -29,6 +29,7 @@ const val CategoryFragment = "$Category/categoryFragment"
 const val Base = "/base"
 
 const val ArticleDetailActivity = "$Base/articleDetailActivity"
+const val SearchActivity = "$Base/SearchActivity"
 
 
 

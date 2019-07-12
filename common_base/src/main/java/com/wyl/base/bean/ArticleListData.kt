@@ -22,5 +22,5 @@ class ArticleListData(
     var pageCount: Int = 0,
     var size: Int = 0,
     var total: Int = 0,
-    var datas: List<ArticleData>? = null
+    var datas: List<ArticleBean>? = null
 )

@@ -11,9 +11,9 @@ import com.wyl.base.HOME_ARTICLE_LIST
 import com.wyl.base.HOME_BANNER
 import com.wyl.base.HOME_FRIEND
 import com.wyl.base.HOME_HOTKEY
-import com.wyl.base.bean.ArticleData
-import com.wyl.base.repository.ArticleRepository
+import com.wyl.base.bean.ArticleBean
 import com.wyl.base.bean.ArticleListData
+import com.wyl.base.repository.ArticleRepository
 import com.wyl.home.bean.BannerData
 import com.wyl.home.bean.FriendData
 import com.wyl.home.bean.HotKeyData
@@ -93,7 +93,7 @@ class HomeViewModel(private val repository: ArticleRepository) : PageViewModel()
             .map { it.data }
 
     /** 收藏文章 */
-    fun collect(data: ArticleData) {
+    fun collect(data: ArticleBean) {
         if (data.id == -1) {
             repository.collectOut(data.title, data.author, data.link)
         } else {
@@ -110,7 +110,7 @@ class HomeViewModel(private val repository: ArticleRepository) : PageViewModel()
 
 
     /** 取消收藏 */
-    fun unCollect(data: ArticleData) {
+    fun unCollect(data: ArticleBean) {
         repository.unCollectHome(data.id)
             .doOnSubscribe { loading.set(true) }
             .doFinally { loading.set(false) }
@@ -143,14 +143,15 @@ class HomeViewModel(private val repository: ArticleRepository) : PageViewModel()
         data: List<HotKeyData>? = null,
         data2: List<FriendData>? = null
     ) {
-        val titles = ObservableArrayList<String>()
+        val hotKeyList = ObservableArrayList<HotKeyData>()
+        val FriendList = ObservableArrayList<FriendData>()
 
         init {
-            data?.forEach {
-                titles.add(it.name)
+            data?.let {
+                hotKeyList.addAll(it)
             }
-            data2?.forEach {
-                titles.add(it.name)
+            data2?.let {
+                FriendList.addAll(it)
             }
         }
     }

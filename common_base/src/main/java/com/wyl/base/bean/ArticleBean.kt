@@ -36,7 +36,7 @@ import com.wyl.base.BR
  * 创建人：乐哥哥
  * 创建时间：2019-07-08 15:59
  */
-class ArticleData : BaseObservable() {
+class ArticleBean : BaseObservable() {
     /**
      * apkLink :
      * author : 郭霖
@@ -66,13 +66,13 @@ class ArticleData : BaseObservable() {
     var apkLink: String = ""
     var author: String = ""
     var chapterId: Int = 0
-    var chapterName: String? = null
+    var chapterName: String = ""
     var courseId: Int = 0
     var desc: String? = null
     var envelopePic: String? = null
     var isFresh: Boolean = false
     var id: Int = -1
-    lateinit var link: String
+    var link: String = ""
     var niceDate: String? = null
     var origin: String? = null
     var projectLink: String? = null

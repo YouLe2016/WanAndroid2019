@@ -23,12 +23,12 @@ fun openArticleDetailActivity(
     collect: Boolean? = null
 ) {
     openActivity(ArticleDetailActivity) {
-        val postcard = withString("url", url)
-        if (title != null) postcard.withString("title", title)
-        if (id != null) postcard.withInt("id", id)
-        if (author != null) postcard.withString("author", author)
-        if (collect != null) postcard.withBoolean("collect", collect)
-        postcard
+        withString("url", url)
+        if (title != null) withString("title", title)
+        if (id != null) withInt("id", id)
+        if (author != null) withString("author", author)
+        if (collect != null) withBoolean("collect", collect)
+        this
     }
 }
 

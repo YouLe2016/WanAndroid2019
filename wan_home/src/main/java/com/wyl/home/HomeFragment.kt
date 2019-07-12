@@ -2,7 +2,6 @@ package com.wyl.home
 
 
 import android.arch.lifecycle.Observer
-import android.content.Intent
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
@@ -13,9 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.wyl.base.*
-import com.wyl.base.activity.ArticleTypeActivity
 import com.wyl.base.activity.openArticleDetailActivity
-import com.wyl.base.bean.ArticleData
+import com.wyl.base.activity.openArticleTypeActivity
+import com.wyl.base.bean.ArticleBean
+import com.wyl.home.bean.FriendData
+import com.wyl.home.bean.HotKeyData
 import com.wyl.home.databinding.HomeFragmentBinding
 import com.wyl.home.databinding.HomeItemBannerBinding
 import com.wyl.home.databinding.HomeItemHotkeyBinding
@@ -33,7 +34,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 const val TYPE_BANNER = 3
 const val TYPE_HOTKEY = 1
 const val TYPE_ARTICLE = 0
-const val TYPE_FRIEND = TYPE_HOTKEY
 
 @Route(path = HomeFragment)
 class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, ItemClickPresenter<Any> {
@@ -95,23 +95,19 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
         when (v.id) {
             R.id.iv_like -> {
                 if (ACacheHelper.hasLogin()) {
-                    val data = item as ArticleData
+                    val data = item as ArticleBean
                     if (data.collect) viewModel.unCollect(data) else viewModel.collect(data)
                 } else {
                     openActivity(LoginActivity)
                 }
             }
             R.id.layoutArticle -> {
-                val bean = item as ArticleData
+                val bean = item as ArticleBean
                 openArticleDetailActivity(bean.link, bean.title, bean.id, bean.author, bean.collect)
             }
             R.id.tv_chapter_name -> {
-                val bean = item as ArticleData
-                startActivity(
-                    Intent(context, ArticleTypeActivity::class.java)
-                        .putExtra("title", bean.chapterName)
-                        .putExtra("id", bean.chapterId)
-                )
+                val bean = item as ArticleBean
+                openArticleTypeActivity(context!!, bean.chapterName, bean.chapterId)
             }
         }
     }
@@ -121,14 +117,31 @@ class HomeFragment : BindingFragment<HomeFragmentBinding>(), ItemDecorator, Item
             layoutManager = GridLayoutManager(context, 3, RecyclerView.HORIZONTAL, false)
             removeItemDecoration(itemDecoration)
             addItemDecoration(itemDecoration)
-            adapter = SingleTypeAdapter(
-                context,
-                R.layout.home_item2_hotkey,
-                binding.item!!.titles
-            ).apply {
-                itemPresenter = object : ItemClickPresenter<String> {
-                    override fun onItemClick(v: View, item: String) {
-                        context?.toast(item)
+            when (binding.item!!.title) {
+                "热词搜索" -> {
+                    adapter = SingleTypeAdapter(
+                        context,
+                        R.layout.home_item2_hotkey,
+                        binding.item!!.hotKeyList
+                    ).apply {
+                        itemPresenter = object : ItemClickPresenter<HotKeyData> {
+                            override fun onItemClick(v: View, item: HotKeyData) {
+                                openActivity(SearchActivity) { withString("key", item.name) }
+                            }
+                        }
+                    }
+                }
+                "常用网站" -> {
+                    adapter = SingleTypeAdapter(
+                        context,
+                        R.layout.home_item2_friend,
+                        binding.item!!.FriendList
+                    ).apply {
+                        itemPresenter = object : ItemClickPresenter<FriendData> {
+                            override fun onItemClick(v: View, item: FriendData) {
+                                openArticleDetailActivity(item.link, item.name)
+                            }
+                        }
                     }
                 }
             }
