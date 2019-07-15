@@ -64,3 +64,12 @@ const val UNCOLLECT_HOME = "${BASE_URL}lg/uncollect_originId/"
  * 取消收藏(我的收藏页面)
  */
 const val UNCOLLECT_MINE = "${BASE_URL}lg/uncollect/"
+
+
+/* **************** 7. 搜索 **********************/
+/**
+ * 搜索
+ *
+ * https://www.wanandroid.com/article/query/0/json
+ */
+const val SEARCH = "${BASE_URL}article/query/"

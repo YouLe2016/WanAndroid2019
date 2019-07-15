@@ -33,7 +33,7 @@ import com.lzg.extend.JsonConvert
 import com.lzg.extend.toDisposables
 import com.lzy.okgo.OkGo
 import com.lzy.okrx2.adapter.ObservableBody
-import com.wyl.base.TREE_ARTICLE
+import com.wyl.base.SEARCH
 import com.wyl.base.bean.ArticleBean
 import com.wyl.base.bean.ArticleListData
 import com.wyl.libbase.base.PageViewModel
@@ -41,9 +41,9 @@ import com.wyl.libbase.base.PageViewModel
 /**
  * 项目名称：WanAndroid2019
  * 创建人：乐哥哥
- * 创建时间：2019-07-08 15:42
+ * 创建时间：2019-7-15 09:18:12
  */
-class ArticleTypeViewModel(val id: Int) : PageViewModel() {
+class ArticleSearchViewModel(var key: String) : PageViewModel() {
     val dataSource = ObservableArrayList<ArticleBean>()
     private var page = 0
 
@@ -75,11 +75,12 @@ class ArticleTypeViewModel(val id: Int) : PageViewModel() {
             }.toDisposables(disposables)
     }
 
+
     private fun loadArticleList() =
-        OkGo.get<BaseResponse<ArticleListData>>("$TREE_ARTICLE$page/json")
-            .params("cid", id)
+        OkGo.post<BaseResponse<ArticleListData>>("$SEARCH$page/json")
+            .params("k", key)
+//            .isMultipart(true)
             .converter(object : JsonConvert<BaseResponse<ArticleListData>>() {})
             .adapt(ObservableBody<BaseResponse<ArticleListData>>())
             .map { it.data }
-
 }

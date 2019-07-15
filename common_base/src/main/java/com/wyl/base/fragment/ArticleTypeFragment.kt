@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.wyl.base.*
 import com.wyl.base.activity.openArticleDetailActivity
+import com.wyl.base.activity.openArticleTypeActivity
 import com.wyl.base.bean.ArticleBean
 import com.wyl.base.databinding.UiItemArticleBinding
 import com.wyl.libbase.base.BindingFragment
@@ -40,18 +41,17 @@ class ArticleTypeFragment : BindingFragment<UiListFragmentBinding>(), ItemClickP
     private val mId by lazy { autoWired("id", -1) }
     private val mKey by lazy { autoWired("key", "") }
 
-    private val articleViewModel: ArticleTypeViewModel by viewModel { parametersOf(mId, mKey) }
+    private val typeViewModel: ArticleTypeViewModel by viewModel { parametersOf(mId) }
+    private val searchViewModel: ArticleSearchViewModel by viewModel { parametersOf(mKey) }
     private val commonViewModel: CommonViewModel by viewModel()
 
     private val mItemDecoration by lazy { RecyclerViewSpace() }
-
     private val mLayoutManager by lazy { LinearLayoutManager(context) }
-
     private val mAdapter by lazy {
         SingleTypeAdapter(
             binding.recyclerView.context,
             R.layout.ui_item_article,
-            articleViewModel.dataSource
+            if (mId != -1) typeViewModel.dataSource else searchViewModel.dataSource
         ).apply {
             itemPresenter = this@ArticleTypeFragment
             if (mId != -1) itemDecorator = this@ArticleTypeFragment
@@ -70,6 +70,9 @@ class ArticleTypeFragment : BindingFragment<UiListFragmentBinding>(), ItemClickP
             R.id.layoutArticle -> {
                 openArticleDetailActivity(item.link, item.title, item.id, item.author, item.collect)
             }
+            R.id.tv_chapter_name -> {
+                openArticleTypeActivity(context!!, item.chapterName, item.chapterId)
+            }
         }
     }
 
@@ -81,7 +84,7 @@ class ArticleTypeFragment : BindingFragment<UiListFragmentBinding>(), ItemClickP
     override fun getLayoutId() = R.layout.ui_list_fragment
 
     override fun initView() {
-        binding.vm = articleViewModel
+        binding.vm = if (mId == -1) searchViewModel else typeViewModel
         binding.recyclerView.apply {
             addItemDecoration(mItemDecoration)
             layoutManager = mLayoutManager

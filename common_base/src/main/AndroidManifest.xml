@@ -6,6 +6,8 @@
     <application>
         <activity android:name=".activity.ArticleTypeActivity">
         </activity>
+        <activity android:name=".activity.SearchActivity">
+        </activity>
         <activity
             android:name=".activity.ArticleDetailActivity"
             android:theme="@style/UI_AppTheme.NoActionBar"/>
